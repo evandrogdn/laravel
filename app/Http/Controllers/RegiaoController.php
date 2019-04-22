@@ -21,7 +21,7 @@ class RegiaoController extends BaseController
     {
         $regiao = $this->regiao->getRegiao($id);
         if (!$regiao) {
-            return response()->json(['response', 'Regiao não encontrada'], 400)
+            return response()->json(['response', 'A Regiao não foi encontrada :( '], 400)
                 ->header('Content-Type', 'application/json');
         }
         return response()->json($regiao, 200)
@@ -36,7 +36,7 @@ class RegiaoController extends BaseController
     {
         $regiao = $this->regiao->atualizarRegiao($id);
         if (!$regiao) {
-            return response()->json(['response', 'Regiao não encontrada'], 400)
+            return response()->json(['response', 'A Regiao não foi encontrada :( '], 400)
                 ->header('Content-Type', 'application/json');
         }
         return response()->json($regiao, 200)
@@ -46,10 +46,10 @@ class RegiaoController extends BaseController
     {
         $regiao = $this->regiao->deletarRegiao($id);
         if (!$regiao) {
-            return response()->json(['response', 'Regiao não encontrada'], 400)
+            return response()->json(['response', 'A Regiao não foi encontrada :( '], 400)
                 ->header('Content-Type', 'application/json');
         }
-        return response()->json(['response' => 'Regiao deletada com sucesso!'], 200)
+        return response()->json(['response' => 'A Região foi excluida com sucesso! <3'], 200)
             ->header('Content-Type', 'application/json');
     }
 }
