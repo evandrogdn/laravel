@@ -27,7 +27,7 @@ class RegiaoController extends BaseController
      * @return string
      */
     public function gravar(Request $request) {
-        $maxId = DB::select("select max(IDTransportadora) + 1 as next from transportadoras");
+        $maxId = DB::select("select max(IDRegiao) + 1 as next from regiao");
         $nome = $request->input("nome");
         DB::table('regiao')
         ->insert(

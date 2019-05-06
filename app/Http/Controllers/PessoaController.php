@@ -21,8 +21,13 @@ class PessoaController extends BaseController {
 
     public function gravar(Request $request)
     {
+        $maxId = DB::select("select max(IDCliente) + 1 as next from clientes");
         $nome = $request->input("nome");
-        DB::table("clientes")->insert(['NomeCompanhia' => $nome]);
+        DB::table("clientes")
+            ->insert([
+                'IDCliente' => $maxId[0]->next,
+                'NomeCompanhia' => $nome
+                ]);
     }
 
     public function deletar(Request $request, $id)
