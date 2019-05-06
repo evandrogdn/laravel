@@ -11,6 +11,10 @@
 |
 */
 
-// Rota para formulario de produtos
-Route::get('produtos/formulario', "ProdutoController@formulario");
-Route::get('produtos/listagem', "ProdutoController@listagem");
+// Rotas para operações de produtos
+Route::get("/produtos/formulario", "ProdutoController@formulario");
+Route::get("/produtos", "ProdutoController@listagem");
+Route::post("/produtos/gravar", "ProdutoController@gravar");
+Route::get("/produtos/deletar/{id}", "ProdutoController@deletar");
+Route::get("/produtos/alterar/formulario/{id}", "ProdutoController@formularioAlterar");
+Route::post("/produtos/alterar/{id}", "ProdutoController@alterar");

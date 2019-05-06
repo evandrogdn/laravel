@@ -1,10 +1,10 @@
 @extends("principal")
 
 @section("conteudo")
-<form method="POST" action="/public/produtos/alterar/{{$produto->id}}">
+<form method="POST" action="/produtos/alterar/{{$produto->IDProduto}}">
     @method('POST')
     @csrf
-    <input type="text" name="nome" value="{{$produto->nome}}">
+    <input type="text" name="nome" value="{{$produto->NomeProduto}}">
 
     <input type="submit" name="gravar">
 </form>
