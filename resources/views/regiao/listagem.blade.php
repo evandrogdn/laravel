@@ -1,20 +1,20 @@
 @extends("principal")
 
 @section("conteudo")
-    <a href="/public/produtos/formulario" class="btn btn-primary">
-        Cadastrar Novo Produto
+    <a href="/regiao/formulario" class="btn btn-primary">
+        Cadastrar Nova Regiao
     </a>
     <hr>
-    <h1>Listagem de Produtos</h1>
+    <h1>Listagem de Regiao</h1>
     <table class="table table-striped table-bordered table-hove">
         @foreach ($regiao as $r)
         <tr>
             <td>{{$r->DescricaoRegiao}}</td>
             <td>
-                <a href="produtos/alterar/formulario/{{$r->IDRegiao}}">
+                <a href="regiao/alterar/formulario/{{$r->IDRegiao}}">
                     <i class="fas fa-search"></i>
                 </a>
-                <a href="produtos/deletar/{{$p->IDRegiao}}">
+                <a href="regiao/deletar/{{$r->IDRegiao}}">
                     <i class="fas fa-trash"></i>
                 </a>
             </td>
