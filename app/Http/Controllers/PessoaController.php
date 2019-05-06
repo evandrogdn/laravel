@@ -28,6 +28,7 @@ class PessoaController extends BaseController {
                 'IDCliente' => $maxId[0]->next,
                 'NomeCompanhia' => $nome
                 ]);
+        return redirect('/pessoas');
     }
 
     public function deletar(Request $request, $id)
