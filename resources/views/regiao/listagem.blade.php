@@ -7,17 +7,14 @@
     <hr>
     <h1>Listagem de Produtos</h1>
     <table class="table table-striped table-bordered table-hove">
-        @foreach ($produtos as $p)
+        @foreach ($regiao as $r)
         <tr>
-            <td>{{$p->nome}}</td>
-            <td>{{$p->valor}}</td>
-            <td>{{$p->descricao}}</td>
-            <td>{{$p->quantidade}}</td>
+            <td>{{$r->DescricaoRegiao}}</td>
             <td>
-                <a href="/public/produtos/alterar/formulario/{{$p->id}}">
+                <a href="produtos/alterar/formulario/{{$r->IDRegiao}}">
                     <i class="fas fa-search"></i>
                 </a>
-                <a href="/public/produtos/deletar/{{$p->id}}">
+                <a href="produtos/deletar/{{$p->IDRegiao}}">
                     <i class="fas fa-trash"></i>
                 </a>
             </td>

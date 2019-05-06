@@ -1,7 +1,10 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-use App\Model\Transportadora;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
+
 class TransportadoraController extends Controller
 {
     private $transportadora = null;
@@ -25,10 +28,14 @@ class TransportadoraController extends Controller
      * @return string
      */
     public function gravar(Request $request) {
+        $maxId = DB::select("select max(IDTransportadora) + 1 as next from transportadoras");
         $nome = $request->input("nome");
         DB::table('transportadoras')
         ->insert(
-            ['NomeCompanhia'=> $nome]
+            [
+                'IDTransportadora' => $maxId[0]->next,
+                'NomeConpanhia'=> $nome
+            ]
         );
         return redirect('/transportadoras');
     }
@@ -61,7 +68,7 @@ class TransportadoraController extends Controller
         $nome = $request->input("nome");
         DB::table('transportadoras')
             ->where('IDTransportadora', '=', $id)
-            ->update(['NomeCompanhia' => $nome]);
+            ->update(['NomeConpanhia' => $nome]);
         
         return redirect('/transportadoras');
     }

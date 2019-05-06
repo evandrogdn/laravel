@@ -1,7 +1,7 @@
 @extends("principal")
 
 @section("conteudo")
-<form method="POST" action="/public/pessoa/alterar/{{$pessoa->id}}">
+<form method="POST" action="/pessoas/alterar/{{$pessoa->IDCliente}}">
     @method('POST')
     @csrf
     <input type="text" name="nome" value="{{$pessoa->nome}}">

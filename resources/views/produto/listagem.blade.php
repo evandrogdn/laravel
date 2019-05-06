@@ -16,7 +16,7 @@
                 <a href="/produtos/alterar/formulario/{{$p->IDProduto}}">
                     <i class="fas fa-search"></i>
                 </a>
-                <a href="/public/produtos/deletar/{{$p->IDProduto}}">
+                <a href="/produtos/deletar/{{$p->IDProduto}}">
                     <i class="fas fa-trash"></i>
                 </a>
             </td>
