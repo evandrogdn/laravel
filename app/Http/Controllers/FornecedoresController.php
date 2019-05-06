@@ -21,8 +21,13 @@ class FornecedoresController extends BaseController {
 
     public function gravar(Request $request)
     {
+        $maxId = DB::select("select max(IDFornecedor) + 1 as next from fornecedores");
         $nome = $request->input("nome");
-        DB::table("fornecedores")->insert(['NomeCompanhia' => $nome]);
+        DB::table("fornecedores")->insert([
+            'IDFornecedor' => $maxId[0]->next,
+            'NomeCompanhia' => $nome
+        ]);
+        return redirect('/fornecedores');
     }
 
     public function deletar(Request $request, $id)

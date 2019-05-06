@@ -6,6 +6,6 @@
     @csrf
     <input type="text" name="nome" value="{{$produto->NomeProduto}}">
 
-    <input type="submit" name="gravar">
+    <input class="btn btn-success" type="submit" name="gravar">
 </form>
 @stop
