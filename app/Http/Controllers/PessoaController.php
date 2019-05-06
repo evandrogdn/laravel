@@ -1,50 +1,47 @@
 <?php
 namespace App\Http\Controllers;
-use Illuminate\Foundation\Bus\DispatchesJobs;
+
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use App\Model\Pessoa;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
+
 class PessoaController extends BaseController {
     private $pessoa = null;
-    public function __construct(Pessoa $pessoa) {
-        $this->pessoa = $pessoa;
+    
+    public function formulario()
+    {
+        return view("pessoa.formulario");
     }
-    public function todasPessoas() {
-        return response()->json($this->pessoa->todasPessoas(), 200)
-            ->header("Content-Type","application/json");
+
+    public function listagem()
+    {
+        $pessoas = DB::table("clientes")->get();
+        return view("pessoa.listagem")->with("pessoas", $pessoas);
     }
-    public function salvarPessoa() {
-        return response()->json($this->pessoa->salvarPessoa(), 201)
-            ->header("Content-Type","application/json");
+
+    public function gravar(Request $request)
+    {
+        $nome = $request->input("nome");
+        DB::table("clientes")->insert(['NomeCompanhia' => $nome]);
     }
-    public function atualizarPessoa($id) {
-        $pessoa = $this->pessoa->atualizarPessoa($id);
-        if (!$pessoa) {
-            return response()->json(['response','Pessoa não encontrada'], 400)
-            ->header("Content-Type","application/json");
-        }
-        return response()->json($pessoa, 200)
-            ->header("Content-Type","application/json");
+
+    public function deletar(Request $request, $id)
+    {
+        DB::table("clientes")->where('IDCliente', $id)->delete();
+        return redirect("/pessoas");
     }
-    public function getPessoa($id) {
-        $pessoa = $this->pessoa->getPessoa($id);
-        if (!$pessoa) {
-            return response()->json(['response','Pessoa não encontrada'], 400)
-            ->header("Content-Type","application/json");
-        }
-        return response()->json($pessoa, 200)
-            ->header("Content-Type","application/json");
+
+    public function formularioAlterar(Request $request, $id)
+    {
+        $pessoa = DB::table("clientes")->where("IDCliente", $id)->get();
+        return view("pessoa.alterar")->with("pessoa", $pessoa[0]);
     }
-    public function deletarPessoa($id) {
-        $pessoa = $this->pessoa->deletarPessoa($id);
-        if (!$pessoa) {
-            return response()->json(['response','Pessoa não encontrada'], 400)
-            ->header("Content-Type","application/json");
-        }
-        return response()->json($pessoa, 200)
-            ->header("Content-Type","application/json");
+
+    public function alterar(Request $request, $id)
+    {
+        $nome = $request->input("nome");
+        DB::table("clientes")->where("IDCliente", $id)->update(["NomeCompanhia", $nome]);
+        return redirect("/pessoas");
     }
 }
 ?>

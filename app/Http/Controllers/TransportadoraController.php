@@ -5,50 +5,64 @@ use App\Model\Transportadora;
 class TransportadoraController extends Controller
 {
     private $transportadora = null;
-    public function __construct(Transportadora $transportadora) {
-        $this->transportadora = $transportadora;
+    public function formulario()
+    {
+        return view("transportadora.formulario");
     }
-    public function getTransportadoras() {
-        return response()->json($this->transportadora->getTransportadoras(),200)
-        ->header("Content-Type","application/json");
+
+    /**
+     * @return array retorna listagem de produtos
+     */
+    public function listagem()
+    {
+        $transportadoras = DB::table("transportadoras")->get();
+        return view("transportadora.listagem")->with("transportadora", $transportadoras);
     }
-    public function addTransportadora(Request $request) {
-        $adicionou = $this->transportadora->addTransportadora($request->all());
-        if (!$adicionou) {
-            return response()->json(['resposta' => 'Já existe'],409)
-            ->header("Content-Type","application/json");
-        } else {
-            return response()->json($adicionou,201)
-            ->header("Content-Type","application/json");
-        }
+
+    /**
+     * Grava a partir de dados do form
+     * @param Request $request
+     * @return string
+     */
+    public function gravar(Request $request) {
+        $nome = $request->input("nome");
+        DB::table('transportadoras')
+        ->insert(
+            ['NomeCompanhia'=> $nome]
+        );
+        return redirect('/transportadoras');
     }
-    public function getTransportadora($id) {
-        $transportadora = $this->transportadora->getTransportadora($id);
-        if (!$transportadora) {
-            return response()->json(['resposta' => 'Não encontrado'],404)
-            ->header("Content-Type","application/json");
-        }
-        return response()->json($transportadora,200)
-        ->header("Content-Type","application/json");
+
+    /**
+     * Remove um produto
+     * @param Request $request
+     * @param $id
+     */
+    public function deletar(Request $request, $id) {
+        DB::table('transportadoras')->where('IDProduto', '=', $id)->delete();
+        return redirect('/transportadoras');
     }
-    public function atualizaTransportadora(Request $req, $id) {
-        $transportadora = $this->transportadora->alteraTransportadora($req,$id);
-        if (!$transportadora) {
-            return response()->json(['resposta' => 'Não encontrado'],404)
-            ->header("Content-Type","application/json");
-        }
-        return response()->json($transportadora,202)
-        ->header("Content-Type","application/json");
+
+    /**
+     * @return dados para o form de cadastro de produtos
+     */
+    public function formularioAlterar(Request $request, $id) {
+        $transportadora = DB::table('transportadoras')
+                        ->where('IDTransportadora', '=', $id)
+                        ->get();
+        return view("transportadora.alterar")->with("transportadora", $transportadora[0]);
     }
-    public function deletaTransportadora($id) {
-        $transportadora = $this->transportadora->deletaTransportadora($id);
-        if (!$transportadora) {
-            return response()->json(['resposta' => 'Não encontrado'],404)
-            ->header("Content-Type","application/json");
-        } else {
-            return response()->json(['resposta' => 'Deletado'],202)
-            ->header("Content-Type","application/json");
-        }
+
+    /**
+     * Grava os dados do produto
+     */
+    public function alterar(Request $request, $id) {
+        //dd($request->all());
+        $nome = $request->input("nome");
+        DB::table('transportadoras')
+            ->where('IDTransportadora', '=', $id)
+            ->update(['NomeCompanhia' => $nome]);
         
+        return redirect('/transportadoras');
     }
 }

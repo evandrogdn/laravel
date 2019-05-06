@@ -54,7 +54,6 @@ class ProdutoController extends BaseController {
         $produto = DB::table('produtos')
                         ->where('IDProduto', '=', $id)
                         ->get();
-                        //dd($produto[0]);
         return view("produto.alterar")->with("produto", $produto[0]);
     }
 

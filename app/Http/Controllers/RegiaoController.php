@@ -1,55 +1,70 @@
 <?php
 namespace App\Http\Controllers;
-use Illuminate\Foundation\Bus\DispatchesJobs;
+
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use App\Model\Regiao;
+use Illuminate\Support\Facades\DB;
+
 class RegiaoController extends BaseController
 {
-    private $regiao = null;
-    public function __construct(Regiao $regiao)
+    public function formulario()
     {
-        $this->regiao = $regiao;
+        return view("regiao.formulario");
     }
-    public function todasRegioes()
+
+    /**
+     * @return array retorna listagem de produtos
+     */
+    public function listagem()
     {
-        return response()->json($this->regiao->todasRegioes(), 200)
-            ->header('Content-Type', 'application/json');
+        $regiao = DB::table("regiao")->get();
+        return view("regiao.listagem")->with("regiao", $regiao);
     }
-    public function getRegiao($id)
-    {
-        $regiao = $this->regiao->getRegiao($id);
-        if (!$regiao) {
-            return response()->json(['response', 'A Regiao não foi encontrada :( '], 400)
-                ->header('Content-Type', 'application/json');
-        }
-        return response()->json($regiao, 200)
-            ->header('Content-Type', 'application/json');
+
+    /**
+     * Grava a partir de dados do form
+     * @param Request $request
+     * @return string
+     */
+    public function gravar(Request $request) {
+        $nome = $request->input("nome");
+        DB::table('regiao')
+        ->insert(
+            ['DescricaoRegiao'=> $nome]
+        );
+        return redirect('/regiao');
     }
-    public function addRegiao()
-    {
-        return response()->json($this->regiao->addRegiao(), 201)
-            ->header('Content-Type', 'application/json');
+
+    /**
+     * Remove um produto
+     * @param Request $request
+     * @param $id
+     */
+    public function deletar(Request $request, $id) {
+        DB::table('regiao')->where('IDRegiao', '=', $id)->delete();
+        return redirect('/regiao');
     }
-    public function atualizarRegiao($id)
-    {
-        $regiao = $this->regiao->atualizarRegiao($id);
-        if (!$regiao) {
-            return response()->json(['response', 'A Regiao não foi encontrada :( '], 400)
-                ->header('Content-Type', 'application/json');
-        }
-        return response()->json($regiao, 200)
-            ->header('Content-Type', 'application/json');
+
+    /**
+     * @return dados para o form de cadastro de produtos
+     */
+    public function formularioAlterar(Request $request, $id) {
+        $produto = DB::table('regiao')
+                        ->where('IDRegiao', '=', $id)
+                        ->get();
+        return view("regiao.alterar")->with("regiao", $produto[0]);
     }
-    public function deletarRegiao($id)
-    {
-        $regiao = $this->regiao->deletarRegiao($id);
-        if (!$regiao) {
-            return response()->json(['response', 'A Regiao não foi encontrada :( '], 400)
-                ->header('Content-Type', 'application/json');
-        }
-        return response()->json(['response' => 'A Região foi excluida com sucesso! <3'], 200)
-            ->header('Content-Type', 'application/json');
+
+    /**
+     * Grava os dados do produto
+     */
+    public function alterar(Request $request, $id) {
+        //dd($request->all());
+        $nome = $request->input("nome");
+        DB::table('regiao')
+            ->where('IDRegiao', '=', $id)
+            ->update(['DescricaoRegiao' => $nome]);
+        
+        return redirect('/regiao');
     }
 }
