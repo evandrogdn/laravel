@@ -33,7 +33,7 @@ class FornecedoresController extends BaseController {
     public function deletar(Request $request, $id)
     {
         DB::table("fornecedores")->where('IDFornecedor', $id)->delete();
-        return redirect("/fornecedoress");
+        return redirect("/fornecedores");
     }
 
     public function formularioAlterar(Request $request, $id)
@@ -46,7 +46,7 @@ class FornecedoresController extends BaseController {
     {
         $nome = $request->input("nome");
         DB::table("fornecedores")->where("IDFornecedor", $id)->update(["NomeCompanhia" => $nome]);
-        return redirect("/fornecedoress");
+        return redirect("/fornecedores");
     }
 }
 ?>
