@@ -29,10 +29,13 @@ class ProdutoController extends BaseController {
      * @return string
      */
     public function gravar(Request $request) {
+        $maxId = DB::select("select max(id) + 1 as next from produtos");
         $nome = $request->input("nome");
         DB::table('produtos')
         ->insert(
-            ['NomeProduto'=> $nome]
+            [
+                'IDProduto' => $maxId[0]->next,
+                'NomeProduto'=> $nome]
         );
         return redirect('/produtos');
     }
