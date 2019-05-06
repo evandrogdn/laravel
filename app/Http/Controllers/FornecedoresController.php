@@ -45,7 +45,7 @@ class FornecedoresController extends BaseController {
     public function alterar(Request $request, $id)
     {
         $nome = $request->input("nome");
-        DB::table("fornecedores")->where("IDFornecedor", $id)->update(["NomeCompanhia", $nome]);
+        DB::table("fornecedores")->where("IDFornecedor", $id)->update(["NomeCompanhia" => $nome]);
         return redirect("/fornecedoress");
     }
 }

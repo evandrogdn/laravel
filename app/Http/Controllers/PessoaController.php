@@ -21,11 +21,13 @@ class PessoaController extends BaseController {
 
     public function gravar(Request $request)
     {
-        $maxId = DB::select("select max(IDCliente) + 1 as next from clientes");
+        $maxId = DB::select("select (max(IDCliente) + 1) as next from clientes");
         $nome = $request->input("nome");
+        $next = $maxId[0]->next;
+        dd($next);
         DB::table("clientes")
             ->insert([
-                'IDCliente' => $maxId[0]->next,
+                'IDCliente' => str::round(),
                 'NomeCompanhia' => $nome
                 ]);
         return redirect('/pessoas');
@@ -45,8 +47,9 @@ class PessoaController extends BaseController {
 
     public function alterar(Request $request, $id)
     {
+        //dd($id);
         $nome = $request->input("nome");
-        DB::table("clientes")->where("IDCliente", $id)->update(["NomeCompanhia", $nome]);
+        DB::table("clientes")->where("IDCliente", $id)->update(["NomeCompanhia"=> $nome]);
         return redirect("/pessoas");
     }
 }
