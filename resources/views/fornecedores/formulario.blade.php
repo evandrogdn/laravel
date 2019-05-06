@@ -23,6 +23,6 @@
     @csrf
     <input type="text" name="nome">
 
-    <button type="button" class="btn btn-success"> Gravar</button>
+    <input type="submit" class="btn btn-success" value="Gravar">
 </div>
 @stop

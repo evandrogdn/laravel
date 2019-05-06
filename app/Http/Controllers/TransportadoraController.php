@@ -46,7 +46,7 @@ class TransportadoraController extends Controller
      * @param $id
      */
     public function deletar(Request $request, $id) {
-        DB::table('transportadoras')->where('IDProduto', '=', $id)->delete();
+        DB::table('transportadoras')->where('IDTransportadora', '=', $id)->delete();
         return redirect('/transportadoras');
     }
 

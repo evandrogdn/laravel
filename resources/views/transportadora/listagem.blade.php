@@ -31,7 +31,7 @@
                 <a href="/transportadoras/alterar/formulario/{{$p->IDTransportadora}}">
                     <i class="fas fa-search"></i>
                 </a>
-                <a href="/produtos/deletar/{{$p->IDTransportadora}}">
+                <a href="/transportadoras/deletar/{{$p->IDTransportadora}}">
                     <i class="fas fa-trash"></i>
                 </a>
             </td>
